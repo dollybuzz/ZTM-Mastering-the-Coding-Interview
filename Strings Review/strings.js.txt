@@ -1,0 +1,69 @@
+//ZTM Mastering the Coding Interview
+const strings = ['a', 'b', 'c', 'd'];
+
+//4*4 = 16 bytes of storage
+
+//Operations
+//push
+strings.push('e'); //O(1)
+
+//pop
+strings.pop();
+strings.pop(); //O(1)
+
+//unshift
+strings.unshift('x'); //O(n) since it causes a loop to increment indices
+
+//splice
+strings.splice(2, 0, 'alien'); //O(n)
+
+//onsole.log(strings);
+
+//C++ static array
+//int a[20];
+//int b[5] = {1,2,3,4,5};
+//would need to copy this over to another array if wanted to change the size since it is static
+
+//Create a function that reverses a string:
+//"Hi My name is Andrei" should be "ierdnA si eman yM iH"
+
+let string = "Hi my name is Dalia";
+
+function reverse(str) {
+  //I failed to check the input first since we aren't guaranteed a string
+  var newString = "";
+  for(let i = string.length-1; i >= 0; i--)
+  {
+      newString += str[i];
+  }
+  return newString;
+}
+
+reverse(string); //O(n)
+
+//Andrei's solutions
+/* 
+function reverse(str) {
+  //check input
+  if(!str || str.length < 2 || typeof str !== 'string')
+  {
+    return 'hmm, that is not good'; 
+  }
+
+  const backwards = [];
+  const totalItems = str.length -1;
+  for(let i = totalItems; i >= 0; i--) {
+    backwards.push(str[i]);
+  }
+  
+  return backwards.join(''); //converts array back to a string
+}
+
+function reverse2(str) {
+  return str.split('').reverse().join('');
+}
+
+const reverse3 = str => str.split('').reverse().join('');
+
+const reverse4 = str => [...str].reverse.join('');
+*/

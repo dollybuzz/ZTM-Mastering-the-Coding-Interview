@@ -1,0 +1,136 @@
+//ZTM Mastering the Coding Interview
+//reference type
+var object1 = {value: 10};
+var object2 = object1;
+var object3 = {value: 10};
+
+object1 === object2; //true
+
+object1 === object3; //false, difference reference address
+
+//context vss cope
+const object4 = {
+  a: function() { 
+    console.log(this);
+  }
+}
+object4.a();
+
+//instantiation
+class Player {
+  constructor(name, type) {
+    console.log('player', this);
+    this.name = name;
+    this.type = type;
+  }
+
+  introduce() {
+    console.log(`Hi I am ${this.name}, I'm a ${this.type}`);
+  }
+}
+
+class Wizard extends Player {
+  constructor(name, type) {
+    super(name, type);
+    console.log('wizard', this);
+
+  }
+
+  play() {
+    console.log(`Weee, I'm a ${this.type}`);
+  }
+}
+
+const wizard1 = new Wizard('Shelly', 'Healer');
+//const wizard2 = new Wizard("Shawn", 'Dark Magic');
+
+//wizard1.play();
+//wizard1.introduce();
+//wizard2.introduce();
+
+//Building a class
+class MyArray {
+  constructor() {
+    this.length = 0;
+    this.data = {};
+  }
+
+  get(index) {
+    return this.data[index];
+  }
+
+  push(item) {
+    this.data[this.length] = item;
+    this.length++;
+    return this.length;
+  }
+
+  pop() {
+    const lastItem = this.data[this.length-1];
+    delete this.data[this.length-1];
+    this.length--;
+    return lastItem;
+  }
+
+  delete(index) {
+    const item = this.data[index];
+    this.shiftItems(index);
+    return item;
+  }
+
+  shiftItems(index) {
+    for(let i = index; i < this.length-1; i++)
+    {
+      this.data[i] = this.data[i+1];
+    }
+    delete this.data[this.length-1];
+    this.length--;
+  }
+}
+
+const newArray = new MyArray();
+newArray.push('hi');
+newArray.push('you');
+newArray.push("!");
+//newArray.pop();
+newArray.delete(0);
+newArray.push('are');
+newArray.push('nice');
+newArray.delete(1);
+console.log(newArray);
+
+//Merge 2 sorted arrays [0,3,4,31] and [4,6,30]
+function mergeSortedArrays(array1, array2) {
+  const mergedArray = [];
+
+  let array1Item = array1[0];
+  let array2Item = array2[0];
+
+  //Check input
+  if(array1.length === 0) {
+    return array2;
+  }
+  if(array2.length === 0) {
+    return array1;
+  }
+
+  let i = 1;
+  let j = 1;
+  while(array1Item || array2Item) {
+    console.log(array1Item, array2Item);
+    if(array1Item < array2Item || !array2Item) { //or array2Item does not exist (undefined)
+      mergedArray.push(array1Item);
+      array1Item = array1[i];
+      i++;
+    } else{
+      mergedArray.push(array2Item);
+      array2Item = array2[j];
+      j++;
+    }
+  }
+
+  return mergedArray;
+}
+
+
+mergeSortedArrays([0,3,4,31], [4,6,30]);
