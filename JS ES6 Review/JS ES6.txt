@@ -1,0 +1,71 @@
+//JS ES6 Review
+
+//Arrow Function Syntax
+console.log("Arrow function syntax:");
+function callMe(name) {
+  console.log(name);
+}
+
+/*const callMe = function(name) {
+  console.log(name);
+}
+becomes*/
+const callMe = name => console.log(name); //can exclude the parentheses, brackets, and return since it is single line statement and has exactly one argument
+/* No arguments looks like
+const callMe = () => {console.log};
+*/
+
+//Spread Operator - used to split up array elements or object properties
+//array example
+console.log("Spread Operator:");
+console.log("Array example");
+const numbers = [1, 2, 3];
+const newNumbers = [...numbers, 4];
+console.log(newNumbers);
+
+const otherNums = [1, 2, 3];
+const otherNewNums = [otherNums, 4];
+console.log(otherNewNums);
+
+//object example
+//Notes - seems like an alternative to class inheritance (extends) without having to create a constructor and super method
+console.log("Object example");
+const person = { name:'Dalia'};
+const newPerson = {...person, age:25};
+console.log(person);
+console.log(newPerson);
+console.log("\n");
+
+//Rest Operator - Used to merge a list of function arguments into an array
+console.log("Rest Operator:");
+const filter = (...args) => args.filter(el => el === 1); //arrow function shorthand
+//const filter = (...args) => { return args.filter(el => el === 1)};
+console.log(filter(1,2,3)); //returns an array since the arguments are presented with the rest operator
+console.log("\n");
+
+//Object Destructuring
+console.log("Object Destructuring:");
+let obj = {name:"Dalia", age:25};
+console.log(obj.name);
+console.log(obj.age);
+
+let {name} = {name:"Dalia", age:25};
+console.log(name);
+console.log(name.age);
+//console.log(age); //reference error, age is not defined
+console.log("\n");
+
+//Array Destructuring
+console.log("Array Destructuring:");
+const numbersArr = [1, 2, 3];
+[num1, , num3] = numbersArr;
+console.log(num1, num3);
+console.log("\n");
+
+//Refreshing Array Functions
+console.log("Refreshing Array Functions:");
+const numbersArr1 = [1, 2, 3];
+const doubleNumArray = numbers.map((num) => num*2);
+console.log(numbersArr1);
+console.log(doubleNumArray);
+
