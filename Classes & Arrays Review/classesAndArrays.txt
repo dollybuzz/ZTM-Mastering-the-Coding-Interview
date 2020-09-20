@@ -1,4 +1,9 @@
 //ZTM Mastering the Coding Interview
+/* Arrays
+Pros: fast lookups, fast push/pop, ordered
+Cons: slow inserts, slow deletes, fixed size (if using static array)
+*/
+
 //reference type
 var object1 = {value: 10};
 var object2 = object1;
