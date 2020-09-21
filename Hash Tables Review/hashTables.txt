@@ -1,0 +1,170 @@
+//ZTM Mastering the Coding Interview
+/*Hash Tables
+Pros: fast lookups but requires good collision resolution, fast inserts, flexible keys
+Cons: unordered, slow key iteration, unordered
+*/
+
+//insert O(1)
+//look up O(1)
+//delete O(1)
+//search O(1)
+
+let user = {
+  age:54,
+  name: 'Kylie',
+  magic: true,
+  scream: function () {
+    console.log('ahhhhh!');
+  }
+}
+
+user.age; //O(1)
+user.spell = 'abra kadabra'; //O(1)
+//user.scream(); //O(1)
+
+//Types of Hash tables in Javascript
+//Note - an object only allows you to save the key as a string
+//Maps - allows you to save any data type including functions and arrays as the key, maintains order of insertion unlike objects which randomly insert in any order
+//const a = new Map();
+
+//Sets - similar to map but only stores the keys, not values
+//const b = new Sets();
+
+ //Implementing our own hash tables
+ class HashTable {
+   constructor(size) {
+     this.data = new Array(size);
+   }
+
+//underscore in Javascript function name is meant to represent that it is private even though Javascript does not allow private variables
+ _hash(key) { 
+   let hash = 0;
+   for(let i = 0; i < key.length; i++) {
+     hash = (hash + key.charCodeAt(i) * i) %
+     this.data.length;
+   }
+   return hash;
+  } //even though there is a loop here, a hash function is really fast and it is only looping over the key therefore O(1)
+
+ set(key, value) { //O(1)
+   let address = this._hash(key);
+
+  if(!this.data[address]) //prevent collisions therefore must check if it exists
+  {
+      this.data[address] = [];
+  }
+  
+  this.data[address].push([key, value]);
+  return this.data;
+ }
+
+  get(key) { //typically O(1) unless there are lots of collisions then would be O(n)
+    let address = this._hash(key);
+    const currentBucket = this.data[address];
+    //console.log(currentBucket);
+    if(currentBucket) {
+      for(let i = 0; i < currentBucket.length; i++)
+      {
+        if(currentBucket[i][0] === key) //"grapes"
+        {
+          return currentBucket[i][1]; //10000
+        }
+      }
+    }
+    return undefined;
+  }
+
+//iterate through all keys
+  keys() {
+    const keysArray = [];
+    for(let i = 0; i < this.data.length; i++)
+    {
+      if(this.data[i])
+      {
+        keysArray.push(this.data[i][0][0]);
+      }
+    }
+    return keysArray;
+  }
+
+  /* Includes hash collision prevention
+   keys() {
+    if (!this.data.length) {
+      return undefined
+    }
+    let result = []
+    // loop through all the elements
+    for (let i = 0; i < this.data.length; i++) {
+        // if it's not an empty memory cell
+        if (this.data[i] && this.data[i].length) {
+          // but also loop through all the potential collisions
+          if (this.data.length > 1) {
+            for (let j = 0; j < this.data[i].length; j++) {
+              result.push(this.data[i][j][0])
+            }
+          } else {
+            result.push(this.data[i][0])
+          } 
+        }
+    }
+    return result; 
+  }
+  */
+ }//end class HashTable
+
+ const myHashTable = new HashTable(50);
+ //myHashTable._hash('1232');
+ myHashTable.set('grapes', 10000);
+ myHashTable.set('apples', 54);
+ myHashTable.set('bananas', 11);
+ myHashTable.set('oranges', 2);
+ //myHashTable.get('grapes');
+ myHashTable.keys();
+ //myHashTable.get('apples');
+ //myHashTable.get('bananas');
+
+ //Google Question
+ /* Given an array = [2,5,1,2,3,5,1,2,4], return the first number repeated;
+ it should return 2
+ 
+ Given an array = [2,1,1,2,3,5,1,2,4]
+ it should return 1
+ 
+ given an array = [2,3,4,5]
+ it should return undefined*/
+
+//first solution O(n^2) and space complexity at O(1)
+function firstRecurringCharacter(input) {
+  for(let i = 0; i < input.length; i++){
+    for(let j = i+1; j < input.length; j++){
+      if(input[i] === input[j])
+      {
+        return input[i];
+      }
+    }
+  }
+  return undefined;
+}
+
+//firstRecurringCharacter([2,5,1,2,3,5,1,2,4]);
+//firstRecurringCharacter([1,5,1,2,3,5,1,2,4]);
+//firstRecurringCharacter([2,1,1,2,3,5,1,2,4]); //doesn't return 1, Andrei didn't test this in the video
+//firstRecurringCharacter([2,3,4,5]);
+
+//second solution
+function firstRecurringCharacter2(input) { 
+  let map = {};
+  for(let i= 0; i < input.length; i++) {
+    //console.log(map[input[i]]);
+    if(map[input[i]] !== undefined) { //map[input[3] returns 0 which translates to false in javascript because of type coersion
+      return input[i]
+    } else {
+      map[input[i]] = i;
+    }
+    //console.log(map);
+  }
+  return undefined;
+}
+//O(n) except space complexity is more 
+//firstRecurringCharacter2([2,5,5,2,3,5,1,2,4]); //returns 5
+//firstRecurringCharacter([2,5,5,2,3,5,1,2,4]); //returns 2 because of how the nested array works but it can be tweaked to get the same result of hash table method
