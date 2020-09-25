@@ -1,5 +1,8 @@
 //ZTM Mastering the Coding Interview
 
+//Pros: fast operations, fast peek, ordered
+//Cons: slow lookup/search
+
 class Stack {
   constructor(){
     this.array = [];
