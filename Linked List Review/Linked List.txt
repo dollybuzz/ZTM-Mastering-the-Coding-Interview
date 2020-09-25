@@ -1,0 +1,155 @@
+//ZTM Mastering the Coding Interview
+
+/* Linked Lists
+Pros: Simple implementation, fast insertion/deletion, ordered, flexible size, requires less memory, a bit faster than doubly linked list
+Cons: cannot be interated in reverse or traversed from back to front, list can be lost in memory 
+if reference to head is lost, long search, slow lookup, more memory
+
+prepend O(1)
+
+append O(1)
+
+lookup O(n)
+
+insert O(n)
+
+delete O(n)
+ */
+
+/*let myLinkedList = {
+  head: {
+    value: 10,
+    next: {
+      value: 5,
+      next: {
+        value: 16,
+        next: null
+      }
+    }
+  }
+}*/
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor(value) {
+      this.head = {
+        value: value,
+        next: null
+      };
+      this.tail = this.head;
+      this.length = 1;
+  }
+
+//my append method - not valid
+ /* append(value) {
+    const nextNode = new LinkedList(value);
+    this.head.next = nextNode;
+    this.tail = nextNode.head;
+    this.length += nextNode.length;
+ }*/
+
+  //Andrei's append method
+  append(value){
+    //const newNode = new Node(value); //alternatively create Node class (above)
+    const newNode = {
+      value: value,
+      next: null
+    };
+    this.tail.next = newNode;
+    this.tail = newNode;
+    this.length++;
+    return this;
+  }
+
+//my prepend method - works!!!
+/*
+prepend(value) {
+  const newNode = {
+    value: value,
+    next: null
+  };
+  let previousHead = this.head;
+  let previousTail = this.tail;
+  this.head = newNode;
+  this.head.next = previousHead;
+  this.length++;
+  return this;
+}*/
+
+//Andrei's prepend method
+prepend(value) {
+  const newNode = {
+      value: value,
+      next: null
+    };
+    newNode.next = this.head;
+    this.head = newNode;
+    this.length++;
+    return this;
+}
+
+printList() {
+  const array = [];
+  let currentNode = this.head;
+  while(currentNode != null) {
+    array.push(currentNode.value);
+    currentNode = currentNode.next;
+  } 
+  return array;
+}
+
+insert(index, value){
+    //Check for proper parameters;
+    if(index >= this.length) {
+      return this.append(value);
+    }
+    
+    const newNode = {
+      value: value,
+      next: null
+    }
+    const leader = this.traverseToIndex(index-1);
+    const holdingPointer = leader.next;
+    leader.next = newNode;
+    newNode.next = holdingPointer;
+    this.length++;
+    return this.printList();
+}
+
+traverseToIndex(index) {
+    //Check parameters
+    let counter = 0;
+    let currentNode = this.head;
+    while(counter !== index){
+      currentNode = currentNode.next;
+      counter++;
+    }
+    return currentNode;
+}
+
+remove(index) {
+    // Check Parameters      
+    const leader = this.traverseToIndex(index-1);
+    const unwantedNode = leader.next;
+    leader.next = unwantedNode.next;
+    this.length--;
+    return this.printList();
+}
+
+
+}
+
+let myLinkedList = new LinkedList(10);
+myLinkedList.append(5);
+myLinkedList.append(16);myLinkedList.prepend(1);
+myLinkedList.insert(2, 99);
+myLinkedList.insert(20, 88);
+myLinkedList.remove(2);
+myLinkedList.printList();
+
