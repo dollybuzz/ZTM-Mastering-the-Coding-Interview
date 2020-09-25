@@ -1,7 +1,7 @@
 //ZTM Mastering the Coding Interview
 
 /* Linked Lists
-Pros: Simple implementation, fast insertion/deletion, ordered, flexible size, requires less memory, a bit faster than doubly linked list
+Pros: scattered memory, Simple implementation, fast insertion/deletion, ordered, flexible size, requires less memory, a bit faster than doubly linked list
 Cons: cannot be interated in reverse or traversed from back to front, list can be lost in memory 
 if reference to head is lost, long search, slow lookup, more memory
 
